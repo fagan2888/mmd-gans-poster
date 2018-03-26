@@ -69,7 +69,11 @@
 
   \begin{column}{.32\textwidth}
     \begin{block}{Introduction}
-    intro
+      We investigate the training and performance of generative adversarial networks 
+      using the Maximum Mean Discrepancy (MMD GANs). We also clarify the situation with 
+      bias in GAN loss functions raised by recent work and relation between MMD GANs and Cram\'er GAN.
+      Finally, we propose new measure of GAN performance, the \emph{Kernel Inception Distance} and show
+      how to use it to dynamically adapt learning rates during GAN training.
     \end{block}
 
     \begin{block}{Relation to Wasserstein and Cram\'er GANs} 
@@ -85,7 +89,7 @@
             \F = \left\{f: \sup\frac{|f(x) - f(y)|}{\|x - y\|}\leq 1\right\}. 
           \]
           Wasserstein GANs approximate this class via critic network, with Lipschitz 
-          constraint enforced thorugh weight clipping \citep{wgan} or gradient 
+          constraint enforced through weight clipping \citep{wgan} or gradient 
           penalty \citep{wgan-gp}
         \item \textbf{Maximum Mean Discrepancy (MMD)} \citep{mmd-jmlr} is the IPM 
           where $\F$ is the unit ball in some 
@@ -113,20 +117,25 @@
       \[ Loss^{critic} = \widehat{MMD_{\theta}}(\PP, \QQ_{\psi}) + \lambda\E_{\tilde{X}}\left(\|\nabla_{\tilde{X}} f^*(\tilde{X})\| - 1\right)^2, \]
       where $\widehat{MMD}$ is an unbiased MMD estimator and $\QQ_{\psi} = G_{\psi}(\ZZ)$ is the generated distribution.
     \end{block}
+    \vspace*{-1cm}
     \begin{block}{Biased gradient estimates}
       \citet{cramer-gan} claim that WGANs have biased gradients, while Cram\'er GANs do not. 
-      As a theoretical contribution, we prove that
+      As a theoretical contribution, we prove that for Wasserstein, Cram\'er and MMD GANs gradient estimates
+      are unbiased, but learning a discriminator based on samples leads to biased gradients 
+      for the generator parameters. Precisely, $\widehat{\D}$ is the estimate of the loss function 
       \begin{itemize} 
         \item $\nabla_{\psi}\widehat{\D}(X, G_{\psi}(Z))$ is biased,
         \item for any fixed $\theta$, $\nabla_{\psi, \theta} \widehat{\D}(X, G_{\psi}(Z))$ is unbiased.
       \end{itemize}
     \end{block}
+    \vspace*{-1cm}
     \begin{block}{Results}
       MMD GANs with gradient penalty and the right kernel lead to slightly or significantly better results 
       than WGAN-GP. We recommend use of a mixture of rational-quadratic kernels.
       Use of MMD as a loss fuction in training GANs also allows limiting the size of the critic 
       network (while preserving sample quality). 
     \end{block}
+    \vspace*{-1cm}
     \begin{figure}
       \centering
       \includegraphics[width=.32\columnwidth]{samples/celeba-mmd-rq-25.png}
@@ -146,6 +155,7 @@
 %               MMD GAN (left) and WGAN-GP (right). Models trained with DCGAN 
 %               architecture with \emph{smaller} discriminator.}
 %    \end{sidefigure}
+    \vspace*{-1cm}
     \begin{table}
       \centering
       \caption{Mean (standard deviation) of score evaluations for the CelebA dataset.}
@@ -179,9 +189,14 @@
       \caption{Estimates of KID (left) and FID (right) between the CIFAR-10 train and test sets. FID estimates 
         exhibit strong bias for $n$ even up to $10\,000$, which is not the case for KID. 
         Standard deviation of estimates shrinks quickly for KID and is always small for FID.}  %Each point is based on 100 samples, estimating with replacement; sampling without replacement, and/or using the full training set, gives similar results. Lines show means, error bars standard deviations, dark colored regions a $\frac{2}{3}$ coverage interval of the samples, light colored regions a $95\%$ interval. Note the differing $n$ axes.}
-    \label{fig:fid-kid-bias}
-\end{figure}
-
+      \label{fig:fid-kid-bias}
+    \end{figure}
+    \begin{block}{Learning Rate Adaptation}
+      Decreasing learning rate during training is a common practice in deep learning, 
+      so far not explored in GAN setting. Instead of tuning learning rate by hand, we propose 
+      using an adaptive scheme, based on comparing the KID score for samples from a previous 
+      iteration to that from the current iteration.
+    \end{block}
      \printbibliography
   \end{column}
 

@@ -38,14 +38,11 @@
 }
 
 \renewenvironment{table}{%
+   \renewcommand{\arraystretch}{1.1}
   \refstepcounter{table}%
   {\usebeamerfont{block title}\usebeamercolor[fg]{block title}\MakeUppercase{\tablename}~\thefigure}\par\vskip1ex
   \renewcommand\caption[1]{\par{\small\raggedright\usebeamercolor[fg]{caption}##1}}
-  \usebeamercolor[fg]{tabular}
-  \rowcolors{1}{tabular.bg}{tabular.bg}
-}{%
-  \vspace*{\baselineskip}
-}
+}{}
 
 \renewcommand{\arraystretch}{1.7}
 \setlength{\aboverulesep}{0pt}
@@ -108,7 +105,7 @@
   \texorpdfstring{\textsuperscript{#1}}{}%
 }
 
-\def\logo{Imperial_1_Pantone_solid}
+\def\logo{} %{Imperial_1_Pantone_solid}
 
 \setbeamersize{text margin left=3em}
 \setbeamersize{text margin right=3em}
@@ -166,7 +163,7 @@
 
 \setbeamertemplate{navigation symbols}{}
 
-\RequirePackage[backend=biber,style=authoryear,natbib=true]{biblatex}
+\RequirePackage[backend=bibtex,style=authoryear,natbib=true]{biblatex}
 \renewcommand{\bibfont}{\small}
 
 \setbeamertemplate{bibliography item}{}
