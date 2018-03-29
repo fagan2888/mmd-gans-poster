@@ -1,4 +1,4 @@
-%% beamerthemeImperialPoster v1.0 2016/10/01
+
 %% Beamer poster theme created for Imperial College by LianTze Lim
 %% LICENSE: LPPL 1.3
 \documentclass[xcolor={table}]{beamer}
@@ -69,16 +69,19 @@
 
   \begin{column}{.32\textwidth}
     \begin{block}{Introduction}
-      We investigate the training and performance of generative adversarial networks 
-      using the Maximum Mean Discrepancy (MMD GANs). We also clarify the situation with 
-      bias in GAN loss functions raised by recent work and relation between MMD GANs and Cram\'er GAN.
-      Finally, we propose new measure of GAN performance, the \emph{Kernel Inception Distance} and show
-      how to use it to dynamically adapt learning rates during GAN training.
+      \begin{itemize}
+        \item We investigate the training and performance of generative adversarial networks 
+              using the Maximum Mean Discrepancy.% (MMD GANs). 
+        \item We clarify the situation with 
+              bias in GAN loss. %and relation between MMD GAN and Cram\'er GAN.
+        \item We propose new measure of GAN performance, %the \emph{Kernel Inception Distance} and 
+              and adaptive learning rate scheme for training.
+      \end{itemize}
     \end{block}
     \vspace*{-1.2cm}
     \begin{block}{Relation to Wasserstein and Cram\'er GANs} 
-      Integral Probablity Metrics (IPMs) are a family of divergences between 
-      probability distribution
+      Integral Probablity Metrics (IPMs) form a family of divergences between 
+      probability distributions
       \begin{equation}
         \D(\PP, \QQ) = \sup_{f\in\F} \E_{X\sim\PP}f(X) - \E_{Y\sim\QQ}f(Y),
       \end{equation}
@@ -90,18 +93,20 @@
           \]
           Wasserstein GANs approximate this class via critic network, with Lipschitz 
           constraint enforced through weight clipping \citep{wgan} or gradient 
-          penalty \citep{wgan-gp}
+          penalty \citep{wgan-gp}.
         \item \textbf{Maximum Mean Discrepancy (MMD)} \citep{mmd-jmlr} is the IPM 
           where $\F$ is the unit ball in some 
-          \emph{Reproducing Kernel Hilbert Space (RKHS)}
+          \emph{Reproducing Kernel Hilbert Space (RKHS)} $\h$ with kernel $k$
           \[ \F = \left\{f: \|f\|_{\h} \leq 1\right\}. \]
           MMD value and the optimal critic are known in the closed form
           \begin{align*}
             MMD(\PP, \QQ) &= \E_{\PP} k(X,X') + \E_{\QQ} k(Y,Y') - 2\E_{\PP,\QQ} k(X,Y),\\
-            f^*(t) &= \E_{\PP}k(X, t) - \E_{\QQ}k(Y, t),
+            f^*(t) &= \E_{\PP}k(X, t) - \E_{\QQ}k(Y, t).
           \end{align*}
-          Where $k$ is a kernel function. MMD GANs \citep{mmd-gan}, however, 
-          optimize the representation in the composite kernel 
+        }
+        \item{
+          MMD GANs \citep{mmd-gan}, however, 
+          optimize \emph{representation} in the composite kernel 
           \[ k_{\theta}(x, y) = k_{base}(h_{\theta}(x), h_{\theta}(y)). \]
         }
         \item Cram\'er GAN is MMD GAN with \emph{Energy Distance} kernel.
@@ -110,20 +115,18 @@
     \end{block}
     \vspace*{-1.2cm}
     \begin{block}{Gradient Penalty}
-      We propose to extend the idea of gradient penalty to MMD-GANs by penalizing the
+      Extending the idea of \citet{wgan-gp}, we penalize the
       gradient of the witness function 
-      \[ Loss^{critic}(\theta) = \widehat{MMD_{\theta}}(\PP, \QQ_{\psi}) + \lambda\E_{\tilde{X}}\left(\|\nabla_{\tilde{X}} f^*(\tilde{X})\| - 1\right)^2, \]
-      where $\tilde{X}$ are drawn between points from $\PP$ and $\QQ_{\psi}$. %$\widehat{MMD}$ is an unbiased MMD estimator.% and $\QQ_{\psi} = G_{\psi}(\ZZ)$ is the generated distribution.
+      \[ Loss^{critic}(\theta) = \widehat{MMD_{\theta}}(\PP, \QQ_{\psi}) + \lambda\E_{\tilde{X}}\left(\|\nabla_{\tilde{X}} f^*(\tilde{X})\| - 1\right)^2. \]
+      %where $\tilde{X}$ are drawn between points from $\PP$ and $\QQ_{\psi}$. %$\widehat{MMD}$ is an unbiased MMD estimator.% and $\QQ_{\psi} = G_{\psi}(\ZZ)$ is the generated distribution.
     \end{block}
   \end{column}
 
   \begin{column}{.32\textwidth}
     \begin{figure}
       \centering
-      \includegraphics[width=.35\columnwidth]{figs/witness.png}
-      ~
-      \includegraphics[width=.35\columnwidth]{figs/trained_witness.png}
-      \caption{Theoretical (left) and estimated (right) witness functions for MMD and Wasserstein distance between two Gaussians}
+        \includegraphics[with=\columnwidth]{witness.pdf}
+      \caption{Estimated (left) and population (right) witness functions for MMD and Wasserstein distance between two Gaussians. Note multiple optimal Wasserstein sample witness functions (in light blue).}
     \end{figure}
     \vspace*{-1.3cm}
     \begin{block}{Biased gradient estimates}
@@ -138,9 +141,10 @@
     \end{block}
     \vspace*{-1.3cm}
     \begin{block}{Results}
-      MMD GANs with gradient penalty and right kernel lead to better results 
-      than WGAN-GP and allow limiting the size of the critic
-      network, while preserving sample quality. %We recommend use of a mixture of rational-quadratic kernels.
+      MMD GANs outperform WGAN-GP and benefit from faster training with \emph{smaller} critic network.
+%      MMD GANs with gradient penalty and right kernel lead to better results 
+%      than WGAN-GP and allow limiting the size of the critic
+%      network, while preserving sample quality. %We recommend use of a mixture of rational-quadratic kernels.
 %      MMD GANs also allow limiting the size of the critic 
 %      network, while preserving sample quality. 
     \end{block}
@@ -171,7 +175,7 @@
                \textbf{$64 \times 64$ LSUN bedroom dataset.}\\
                Samples from 
                MMD GAN (left) and WGAN-GP (right) models trained with DCGAN 
-               architecture with \emph{small} critic.%\\[10pt]
+               architecture with \emph{small critic}\\ ($4\times$ less convolutional filters) .%\\[10pt]
                %MMD GANs trained with composite \emph{rational quadratic} kernel.
                }
     \end{sidefigure4}
@@ -194,15 +198,15 @@
 
   \begin{column}{.32\textwidth}
     \begin{block}{KID - new evaluation method for GANs}
-      \emph{Inception score} and \emph{Fr\'echet Inception Distance (FID)} are two commonly used methods 
-      of quantitative evaluation of GANs. Yet, both have drawbacks. 
+      \emph{Inception score} and \emph{Fr\'echet Inception Distance (FID)} are two common methods 
+      of GAN evaluation. Yet, both have drawbacks. 
       \begin{itemize}
         \item Inception is independent of the target distribution and not meaningful for datasets such as LSUN or CelebA.
         \item FID estimates are biased.
         \item We propose an alternative method, \emph{Kernel Inception Distance (KID)}, defined as 
-      MMD estimate (with polynomial kernel $k(x,y) = \left(\frac{1}{d}\langle x, y\rangle + 1\right)^3$
-      between Inception hidden layer activations of the real and generated samples. 
-        \item KID has low bias even for moderate sample sizes.
+      MMD estimate (with kernel $k(x,y) = \left(\frac{1}{d}\langle x, y\rangle + 1\right)^3$)
+      between Inception hidden layer activations of the samples. 
+%        \item KID has low bias even for moderate sample sizes.
       \end{itemize}
     \end{block}
     \begin{figure}
@@ -215,10 +219,11 @@
       \label{fig:fid-kid-bias}
     \end{figure}
     \begin{block}{Learning Rate Adaptation}
-      Decreasing learning rate during training is a common practice in deep learning, 
-      so far not explored in GAN setting. Instead of tuning learning rate by hand, we propose 
-      using an adaptive scheme, based on comparing the KID score for samples from a previous 
-      iteration to that from the current iteration.
+      \begin{itemize}
+%        \item Decreasing learning rate is common in deep learning.
+        \item In GAN training, learning rate is usually tuned by hand.
+        \item We propose an adaptive scheme, based on comparing the KID score for samples from consecutive iterations.
+      \end{itemize}
     \end{block}
      \printbibliography
   \end{column}
