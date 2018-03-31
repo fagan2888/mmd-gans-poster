@@ -250,23 +250,22 @@
       FID (left) and KID (right) estimates between CIFAR-10 train and test sets.
       FID has strong bias and almost no variance;
       KID has no bias and rapidly decreasing variance.
-      \begin{center}
-        \includegraphics[width=.48\columnwidth]{figs/fid-bias.pdf}
-        \includegraphics[width=.48\columnwidth]{figs/mmd-unbiased.pdf}
+      \\
+      \includegraphics[width=.48\columnwidth]{figs/fid-bias.pdf}
+      \includegraphics[width=.48\columnwidth]{figs/mmd-unbiased.pdf}
         % TODO: remake pictures the same size, and with bigger text...
 
         % \caption{Estimates of KID (left) and FID (right) between the CIFAR-10 train and test sets. FID estimates 
         %   exhibit strong bias for $n$ even up to $10\,000$, which is not the case for KID. 
         %   Standard deviation of estimates shrinks quickly for KID and is always small for FID.}  %Each point is based on 100 samples, estimating with replacement; sampling without replacement, and/or using the full training set, gives similar results. Lines show means, error bars standard deviations, dark colored regions a $\frac{2}{3}$ coverage interval of the samples, light colored regions a $95\%$ interval. Note the differing $n$ axes.}
         % \label{fig:fid-kid-bias}
-      \end{center}
     \end{block}
 
     \begin{block}{Learning Rate Adaptation}
       \begin{itemize}
 %        \item Decreasing learning rate is common in deep learning.
-        \item In GAN training, learning rate is usually tuned by hand.
-        \item We propose an adaptive scheme, based on comparing the KID score for samples from consecutive iterations.
+        \item GAN learning rates usually tuned by hand; need to get it right.
+        \item We propose an adaptive scheme: decrease if the KID score hasn't improved for a while, using an \emph{MMD relative similarity test} \citep{3sample}.
       \end{itemize}
     \end{block}
 
