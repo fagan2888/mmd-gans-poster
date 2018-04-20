@@ -103,43 +103,46 @@
             \F = \left\{f: \sup_{x,y} \frac{|f(x) - f(y)|}{\|x - y\|}\leq 1\right\}. 
           \]
           WGANs approximate $f$ with a critic network,
-          using weight clipping \citep{wgan}
-          or gradient penalty \citep{wgan-gp}.
-        \item \textbf{Maximum Mean Discrepancy (MMD)} %\citep{mmd-jmlr}
-          has $\F$ a unit ball in some 
-          \emph{Reproducing Kernel Hilbert Space (RKHS)} $\h$ with kernel $k$.
+          using weight clipping \parencite{wgan}
+          or gradient penalty \parencite{wgan-gp}.
+        \item \textbf{Maximum Mean Discrepancy (MMD)} %\parencite{mmd-jmlr}
+          has $\F$ a unit ball in a 
+          \emph{Reproducing Kernel Hilbert Space (RKHS)} $\h$ with kernel $k$:
           % \[ \F = \left\{f: \|f\|_{\h} \leq 1\right\}. \]
-          MMD value and the optimal critic are known in closed form:
+          % MMD value and the optimal critic are known in closed form:
           \begin{align*}
             \mmd_k^2(\PP, \QQ) &= \E_{\PP} k(X,X') + \E_{\QQ} k(Y,Y') - 2\E_{\PP,\QQ} k(X,Y),\\
             f^*(t) &\propto \E_{\PP}k(X, t) - \E_{\QQ}k(Y, t).
           \end{align*}
         }
         \item
-          MMD GANs \citep{mmd-gan} optimize \emph{representation} in kernel 
+          MMD GANs \parencite{mmd-gan} optimize \emph{representation} in kernel 
           \[ k_{\theta}(x, y) = k_\mathrm{base}(h_{\theta}(x), h_{\theta}(y)), \]
           corresponding to distance
           \[ \D(\PP, \QQ) = {\sup}_\theta \D_\theta(\PP, \QQ) = {\sup}_{\theta} \mmd_{k_\theta}^2(\PP, \QQ). \]
-        \item Cram\'er GAN \citep{cramer-gan} is essentially an MMD~GAN with \emph{Energy Distance} $k_\mathrm{base}$.
-        \item WGANs are \emph{almost} an MMD GAN with linear $k_\mathrm{base}$.
+        \item Cram\'er GAN \parencite{cramer-gan} almost same, with \emph{Energy Distance} $k_\mathrm{base}$.
+        % \item WGANs are \emph{almost} an MMD GAN with linear $k_\mathrm{base}$.
       \end{itemize}
+    \end{block}
 
-      Wasserstein and (Gaussian kernel) MMD witness functions: \\[1ex]
-      \includegraphics[width=\linewidth]{figs/witness.pdf}\\[-.75ex]
-      Note multiple sample-optimal Wasserstein critics (light blue).
+    \begin{block}{Gradient Penalty}
+      Extending the idea of \textcite{wgan-gp}, we penalize the
+      gradient of the MMD GAN critic function:
+      \[ Loss^{critic}(\theta) = \widehat{\mmd}_{\theta}^2(\PP, \QQ_{\psi}) + \lambda\E_{\tilde{X}}\left(\|\nabla_{\tilde{X}} f^*(\tilde{X})\| - 1\right)^2. \]
+      %where $\tilde{X}$ are drawn between points from $\PP$ and $\QQ_{\psi}$. %$\widehat{MMD}$ is an unbiased MMD estimator.% and $\QQ_{\psi} = G_{\psi}(\ZZ)$ is the generated distribution.
+      With linear $k_\mathrm{base}$,
+      this is almost same as a WGAN-GP.
     \end{block}
   \end{column}
 
   \begin{column}{.32\textwidth}
-    \begin{block}{Gradient Penalty}
-      Extending the idea of \citet{wgan-gp}, we penalize the
-      gradient of the witness function in MMD GANs:
-      \[ Loss^{critic}(\theta) = \widehat{\mmd}_{\theta}^2(\PP, \QQ_{\psi}) + \lambda\E_{\tilde{X}}\left(\|\nabla_{\tilde{X}} f^*(\tilde{X})\| - 1\right)^2. \]
-      %where $\tilde{X}$ are drawn between points from $\PP$ and $\QQ_{\psi}$. %$\widehat{MMD}$ is an unbiased MMD estimator.% and $\QQ_{\psi} = G_{\psi}(\ZZ)$ is the generated distribution.
-    \end{block}
-    \vspace*{-1.3cm}
+      % Wasserstein and (Gaussian kernel) MMD optimal critics: \\[1ex]
+      \includegraphics[width=\linewidth]{figs/witness.pdf}\\[-.75ex]
+      % Note multiple sample-optimal Wasserstein critics (light blue).
+
+    % \vspace*{-1.3cm}
     \begin{block}{Theory: Biased gradient estimates}
-      \citet{cramer-gan} claim that WGANs have biased generator gradients, while Cram\'er GANs do not. We show:
+      \textcite{cramer-gan} claim that WGANs have biased generator gradients, while Cram\'er GANs do not. We show:
       \vspace*{-1.5ex}
       \begin{itemize}
         \item For a \emph{fixed} kernel/critic,
@@ -234,7 +237,7 @@
       Inception scores are independent of the target distribution;
       not meaningful for LSUN or CelebA.
 
-      Fr\'echet Inception Distance (FID) \citep{fid} is better,
+      Fr\'echet Inception Distance (FID) \parencite{fid} is better,
       but estimator is very biased:
       \vspace*{-1.5ex}\begin{itemize}
         \item Bias \emph{very} strong across sample sizes (figure below).
@@ -275,7 +278,7 @@
       \begin{itemize}
 %        \item Decreasing learning rate is common in deep learning.
         \item GAN learning rates usually tuned by hand; need to get it right.
-        \item We propose an adaptive scheme: decrease if the KID score hasn't improved for a while, using an \emph{MMD relative similarity test} \citep{3sample}.
+        \item We propose an adaptive scheme: decrease if the KID score hasn't improved for a while, using an \emph{MMD relative similarity test} \parencite{3sample}.
       \end{itemize}
     \end{block}
 

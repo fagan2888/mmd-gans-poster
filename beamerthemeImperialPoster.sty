@@ -132,7 +132,7 @@
   \null\begin{minipage}{\logowidth}
   % \includegraphics[width=\logowidth]{\logo}
   \end{minipage}\hfill\par
-  \if@beamerposter@portrait\else\vspace*{-\baselineskip}\fi
+  \if@beamerposter@portrait\else\vspace*{-2\baselineskip}\fi
   \hfill\begin{minipage}{\dimexpr\textwidth-\titleindent\relax}
   \begin{center}
 %   \vskip\baselineskip%
@@ -165,10 +165,11 @@
 
 \setbeamertemplate{navigation symbols}{}
 
-\RequirePackage[backend=biber,style=authoryear,natbib=true,maxcitenames=1,maxbibnames=1]{biblatex}
+\RequirePackage[backend=biber,style=numeric,maxcitenames=1,maxbibnames=1]{biblatex}
 \renewcommand{\bibfont}{\footnotesize}
 
-\setbeamertemplate{bibliography item}{}
+\setbeamertemplate{bibliography item}{\insertbiblabel\;}
+\setbeamercolor{bibliography item}{fg=normal text.fg}
 \setbeamercolor{bibliography entry author}{fg=normal text.fg}
 \setbeamercolor{bibliography entry note}{fg=normal text.fg}
 \defbibheading{bibliography}[\refname]{%
