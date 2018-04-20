@@ -53,16 +53,18 @@
 
 \addbibresource{refs.bib}
 
+\definecolor{blackish}{RGB}{16,14,12}
+
 \begin{document}
 \addtobeamertemplate{headline}{} % Imperial Logo. This is a bit hacky
 {
 \begin{tikzpicture}[remember picture,overlay]
-\node[shift={(0,-1cm)}] at (current page.north) {
-  \includegraphics{UCL_Black_Landscape.pdf} };
-\end{tikzpicture}
+\node (uclbox) [shift={(-.36\linewidth,-4cm)}, align=left] at (current page.north east) {
+  \includegraphics[height=12cm]{UCL_Black_Landscape.pdf} };
 
-\begin{tikzpicture}[remember picture,overlay] 
-\node[shift={(9cm,-6cm)}] at (current page.north west) { \includegraphics[height=3.75cm]{Imperial_logo_white.pdf}}; 
+\draw[fill=blackish](current page.north west) rectangle ([yshift=-12.175cm, xshift=2cm] uclbox.north west);
+
+\node[shift={(10cm,-7cm)}] at (current page.north west) { \includegraphics[height=3.75cm]{Imperial_logo_white.pdf}}; 
 \end{tikzpicture} 
 % \begin{tikzpicture}[remember picture,overlay]
 % \node[shift={(-10cm,-5cm)}] at (current page.north east) { \includegraphics[height=7cm]{gatsby.jpg}};
@@ -105,8 +107,8 @@
           or gradient penalty \citep{wgan-gp}.
         \item \textbf{Maximum Mean Discrepancy (MMD)} %\citep{mmd-jmlr}
           has $\F$ a unit ball in some 
-          \emph{Reproducing Kernel Hilbert Space (RKHS)} $\h$ with kernel $k$
-          \[ \F = \left\{f: \|f\|_{\h} \leq 1\right\}. \]
+          \emph{Reproducing Kernel Hilbert Space (RKHS)} $\h$ with kernel $k$.
+          % \[ \F = \left\{f: \|f\|_{\h} \leq 1\right\}. \]
           MMD value and the optimal critic are known in closed form:
           \begin{align*}
             \mmd_k^2(\PP, \QQ) &= \E_{\PP} k(X,X') + \E_{\QQ} k(Y,Y') - 2\E_{\PP,\QQ} k(X,Y),\\
@@ -123,7 +125,7 @@
       \end{itemize}
 
       Wasserstein and (Gaussian kernel) MMD witness functions: \\[1ex]
-      \includegraphics[width=\linewidth]{figs/witness.png}\\
+      \includegraphics[width=\linewidth]{figs/witness.pdf}\\
       Note multiple sample-optimal Wasserstein critics (light blue).
     \end{block}
   \end{column}
@@ -185,20 +187,22 @@
 
     \begin{minipage}{.6\linewidth}
       \includegraphics[width=.49\linewidth]{samples/celeba-mmd-rq-25.png}
+      \,
       \includegraphics[width=.49\linewidth]{samples/celeba-wgan-25.png}
     \end{minipage}
-    \begin{minipage}{.39\linewidth}
+    \begin{minipage}{.39\linewidth}\raggedright
       \textbf{CelebA, $160 \times 160$.} \\
-      MMD GAN (left) and WGAN-GP (right) samples,
+      MMD GAN (left) and WGAN-GP (right),
       with ResNet generator and DCGAN critic.
     \end{minipage}
     \\[.5ex]
 
     \begin{minipage}{.6\linewidth}
       \includegraphics[width=.49\linewidth]{samples/lsun_rq_16.png}
+      \,
       \includegraphics[width=.49\linewidth]{samples/lsun_wgan_16.png}
     \end{minipage}
-    \begin{minipage}{.39\linewidth}
+    \begin{minipage}{.39\linewidth}\raggedright
        \textbf{LSUN bedroom, $64 \times 64$.}\\
        MMD GAN (left) and WGAN-GP (right),
        with \emph{small critic} DCGANs ($4\times$ less convolutional filters).
