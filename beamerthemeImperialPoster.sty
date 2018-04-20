@@ -109,9 +109,9 @@
 
 \setbeamersize{text margin left=3em}
 \setbeamersize{text margin right=3em}
-\setbeamerfont{title}{series=\bfseries,size=\Large,family=\sffamily}
+\setbeamerfont{title}{series=\bfseries,size=\Huge,family=\sffamily}
 \setbeamerfont{author}{series=\bfseries,size=\large,family=\sffamily}
-\setbeamerfont{institute}{series=\bfseries,size=\normalsize,family=\sffamily}
+\setbeamerfont{institute}{series=\bfseries,size=\small,family=\sffamily}
 \setbeamerfont{structure}{family=\sffamily}
 \setbeamerfont{block title}{series=\mdseries,size=\large}
 
@@ -121,26 +121,28 @@
   \newlength{\logowidth}
   \newlength{\titleindent}
 
-  \if@beamerposter@portrait
-    \setlength{\logowidth}{0.25\textwidth}
-    \setlength{\titleindent}{\dimexpr 0.5\logowidth+2em\relax}
-  \else
-    \setlength{\logowidth}{0.167\textwidth}
-    \setlength{\titleindent}{\dimexpr\logowidth+1em\relax}
-  \fi
+  % \if@beamerposter@portrait
+  %   \setlength{\logowidth}{0.25\textwidth}
+  %   \setlength{\titleindent}{\dimexpr 0.5\logowidth+2em\relax}
+  % \else
+  %   \setlength{\logowidth}{0.167\textwidth}
+  %   \setlength{\titleindent}{\dimexpr\logowidth+1em\relax}
+  % \fi
   \begingroup\raggedright
   \null\begin{minipage}{\logowidth}
   % \includegraphics[width=\logowidth]{\logo}
   \end{minipage}\hfill\par
   \if@beamerposter@portrait\else\vspace*{-\baselineskip}\fi
   \hfill\begin{minipage}{\dimexpr\textwidth-\titleindent\relax}
+  \begin{center}
 %   \vskip\baselineskip%
-  \raggedright%
+  %\raggedright%
   {\usebeamerfont{title}\usebeamercolor[fg]{title}\MakeUppercase{\inserttitle}\par}
 %   \vskip1em
   {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}
-%   \vskip1em
+  \vskip.5ex
   {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}
+  \end{center}
   \end{minipage}%
 \endgroup\vspace*{1.5\baselineskip}
 }

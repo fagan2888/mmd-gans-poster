@@ -23,13 +23,13 @@
 
 \title{Demystifying MMD GANs}
 \author{
-  \mainauthor{Miko{\l}aj Bi\'nkowski}\Tsup{1}, 
-  \mainauthor{Dougal J. Sutherland}\Tsup{2},
-  Michael Arbel\Tsup{2},
+  \mainauthor{Miko{\l}aj Bi\'nkowski}\Tsup{1} \quad
+  \mainauthor{Dougal J. Sutherland}\Tsup{2} \quad
+  Michael Arbel\Tsup{2} \quad
   Arthur Gretton\Tsup{2}
 }
 \institute{
-  \Tsup{1}Department of Mathematics, Imperial College London \qquad
+  \Tsup{1}Department of Mathematics, Imperial College London \quad
   \Tsup{2}Gatsby Computational Neuroscience Unit, University College London\\
   \texttt{\{mikbinkowski,dougal,michael.n.arbel,arthur.gretton\}@gmail.com}
 }
@@ -56,12 +56,17 @@
 \begin{document}
 \addtobeamertemplate{headline}{} % Imperial Logo. This is a bit hacky
 {
-\begin{tikzpicture}[remember picture,overlay] 
-\node [shift={(11cm,-5cm)}] at (current page.north west) {\includegraphics[height=3cm]{Imperial_logo.pdf}}; 
-\end{tikzpicture} 
 \begin{tikzpicture}[remember picture,overlay]
-\node [shift={(-10cm,-5cm)}] at (current page.north east) {\includegraphics[height=7cm]{gatsby.jpg}};
+\node[shift={(0,-1cm)}] at (current page.north) {
+  \includegraphics{UCL_Black_Landscape.pdf} };
 \end{tikzpicture}
+
+\begin{tikzpicture}[remember picture,overlay] 
+\node[shift={(9cm,-6cm)}] at (current page.north west) { \includegraphics[height=3.75cm]{Imperial_logo_white.pdf}}; 
+\end{tikzpicture} 
+% \begin{tikzpicture}[remember picture,overlay]
+% \node[shift={(-10cm,-5cm)}] at (current page.north east) { \includegraphics[height=7cm]{gatsby.jpg}};
+% \end{tikzpicture}
 }
 
 \begin{frame}{}
@@ -71,12 +76,12 @@
   \begin{column}{.32\textwidth}
     \begin{block}{Overview}
       \begin{itemize}
-        \item We relate the formulation of MMD GANs to Wasserstein and Cram\'er GANs
-              via the notion of witness functions.
-        \item We clarify the situation of gradient bias in optimizing GANs:
-              ``outer loop'' gradients are biased, but update steps are unbiased.
-        \item We propose a new measure of GAN performance, %the \emph{Kernel Inception Distance} and 
-              and use it to adapt the learning rate during training.
+        \item MMD GANs are related to WGANs, but with part of critic function optimization done in closed form.
+        \item We clarify gradient bias in optimizing GANs:
+              ``outer loop'' generator gradients are biased,
+              but each step is unbiased.
+        \item New GAN performance metric with better estimator than FID;
+              use it to adapt the learning rate during training.
       \end{itemize}
     \end{block}
     % \vspace*{-1.2cm}
