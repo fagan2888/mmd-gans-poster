@@ -59,12 +59,12 @@
 \addtobeamertemplate{headline}{} % Imperial Logo. This is a bit hacky
 {
 \begin{tikzpicture}[remember picture,overlay]
-\node (uclbox) [shift={(-.36\linewidth,-4cm)}, align=left] at (current page.north east) {
-  \includegraphics[height=12cm]{UCL_Black_Landscape.pdf} };
+\node (uclbox) [shift={(-.39\linewidth,-4cm)}, align=left] at (current page.north east) {
+  \includegraphics[height=13cm]{UCL_Black_Landscape.pdf} };
 
-\draw[fill=blackish](current page.north west) rectangle ([yshift=-12.175cm, xshift=2cm] uclbox.north west);
+\draw[fill=blackish](current page.north west) rectangle ([yshift=.2225cm, xshift=2cm] uclbox.south west);
 
-\node[shift={(10cm,-7cm)}] at (current page.north west) { \includegraphics[height=3.75cm]{Imperial_logo_white.pdf}}; 
+\node[shift={(10cm,-7.5cm)}] at (current page.north west) { \includegraphics[height=3.5cm]{Imperial_logo_white.pdf}}; 
 \end{tikzpicture} 
 % \begin{tikzpicture}[remember picture,overlay]
 % \node[shift={(-10cm,-5cm)}] at (current page.north east) { \includegraphics[height=7cm]{gatsby.jpg}};
@@ -120,12 +120,12 @@
           \[ k_{\theta}(x, y) = k_\mathrm{base}(h_{\theta}(x), h_{\theta}(y)), \]
           corresponding to distance
           \[ \D(\PP, \QQ) = {\sup}_\theta \D_\theta(\PP, \QQ) = {\sup}_{\theta} \mmd_{k_\theta}^2(\PP, \QQ). \]
-        \item Cram\'er GAN \citep{cramer-gan} is essentially an MMD GAN with the \emph{Energy Distance} kernel.
+        \item Cram\'er GAN \citep{cramer-gan} is essentially an MMD~GAN with \emph{Energy Distance} $k_\mathrm{base}$.
         \item WGANs are \emph{almost} an MMD GAN with linear $k_\mathrm{base}$.
       \end{itemize}
 
       Wasserstein and (Gaussian kernel) MMD witness functions: \\[1ex]
-      \includegraphics[width=\linewidth]{figs/witness.pdf}\\
+      \includegraphics[width=\linewidth]{figs/witness.pdf}\\[-.75ex]
       Note multiple sample-optimal Wasserstein critics (light blue).
     \end{block}
   \end{column}
@@ -139,33 +139,34 @@
     \end{block}
     \vspace*{-1.3cm}
     \begin{block}{Theory: Biased gradient estimates}
-      \citet{cramer-gan} claim that WGANs have biased gradients, while Cram\'er GANs do not. We show:
+      \citet{cramer-gan} claim that WGANs have biased generator gradients, while Cram\'er GANs do not. We show:
       \vspace*{-1.5ex}
       \begin{itemize}
-        \item For a \emph{fixed kernel} (MMD GAN) or \emph{fixed critic} (WGAN),
+        \item For a \emph{fixed} kernel/critic,
               generator gradient steps are unbiased.
-              (Same for critic.)
-        \begin{itemize}
-          \item General proof of $\E \nabla f = \nabla \E f$ for feedforward networks $f$.
-        \end{itemize}
+              % (Same for critic.)
+        % \begin{itemize}
+        %   \item General proof of $\E \nabla f = \nabla \E f$ for feedforward networks $f$.
+        % \end{itemize}
         \item ``Outer-loop'' gradient steps, $\nabla_\psi \hat\D(X, G_{\psi}(Z))$, are biased.
         \begin{itemize}
           \item Estimators with non-constant bias have biased gradients.
           \item Optimization-based estimators are biased:
             \[
-            \E \hat\D(X, Y)
+            \E \hat\D%(X, Y)
                  = \E \hat\D_{\hat f_{tr}}(X_{te}, Y_{te})
                  = \E \D_{\hat f_{tr}}(\PP, \QQ)
-                 \le {\sup}_f \D_f(\PP, \QQ)
+                 \le {\sup}_f \D_f
+                 = \D
             .\]
-          \item No possible unbiased estimator exists for IPMs $\D$.
+          % \item No possible unbiased estimator exists for IPMs $\D$.
           \item Small minibatch sizes \emph{don't} introduce bias: bias vanishes as critic becomes optimal.
         \end{itemize}
       \end{itemize}
     \end{block}
     \vspace*{-1.5ex}
     \begin{block}{Experimental comparison}
-      MMD GANs outperform WGAN-GP and benefit from faster training with \emph{smaller} critic network,
+      MMD GANs outperform WGAN-GP, especially with \emph{smaller} critic networks (faster to train),
       probably by ``offloading'' work to closed-form kernel optimization.
 %      MMD GANs with gradient penalty and right kernel lead to better results 
 %      than WGAN-GP and allow limiting the size of the critic
@@ -219,10 +220,10 @@
     \begin{tabular}{cc|rrr}
         loss & top layer & \multicolumn{1}{c}{Inception} & \multicolumn{1}{c}{FID} & \multicolumn{1}{c}{KID} \\
         \hline
-        MMD RQ   &   16 &    2.61  (0.01) &   20.55  (0.25) &   0.013  (0.001)\\
+        MMD RQ   &   16 &\quad   2.61  (0.01) &\quad \textbf{20.55}  (0.25) &\quad \textbf{0.013}  (0.001)\\
         Cram\'er &  256 &    2.86  (0.01) &   31.30  (0.17) &   0.025  (0.001)\\
-        WGAN-GP  & 1    &    2.72  (0.01) &   29.24  (0.22) &   0.022  (0.001)\\
-        test set & --   &    3.76  (0.02) &    2.25  (0.04) &   0.000  (0.000)\\
+        WGAN-GP  & 1    &\textbf{2.72}  (0.01) &   29.24  (0.22) &   0.022  (0.001)\\
+        \multicolumn{2}{c|}{test set} &    3.76  (0.02) &    2.25  (0.04) &   0.000  (0.000)\\
     \end{tabular}
     \endgroup
   % \end{table}
@@ -238,13 +239,12 @@
       \vspace*{-1.5ex}\begin{itemize}
         \item Bias \emph{very} strong across sample sizes (figure below).
         \item 
-        Easy to find models $\PP_1$, $\PP_2$ and target $\QQ$ where
+        Easy to find $\PP_1$, $\PP_2$, $\QQ$ where for reasonable sample sizes
         \[
           \FID(\PP_1, \QQ) < \FID(\PP_2, \QQ)
-          \text{ but }
+          \;\text{ but }\;
           \E \FID(\hat\PP_1, \QQ) > \E \FID(\hat\PP_2, \QQ)
-        \]
-        for reasonable sample sizes.
+        .\]
         \item Monte Carlo ``confidence intervals'' are meaningless.
       \end{itemize}
 
@@ -252,8 +252,8 @@
       $\mmd^2$ estimate with kernel $k(x, y) = \left( x^{\mathsf T} y / d + 1 \right)^3$
       between Inception representations.
       \vspace*{-1.5ex}\begin{itemize}
-        \item Similar to FID, but simple unbiased estimator.
-        \item Estimator is computationally faster and needs fewer samples.
+        % \item Similar to FID, but simple unbiased estimator.
+        \item Unbiased estimator is faster, needs fewer samples.
         \item Asymptotically normal: easy Monte Carlo confidence intervals.
       \end{itemize}
 
