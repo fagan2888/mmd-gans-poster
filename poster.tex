@@ -191,7 +191,7 @@
 
     \begin{minipage}{.6\linewidth}
       \includegraphics[width=.49\linewidth]{samples/celeba-mmd-rq-25.png}
-      \,
+      \hfill
       \includegraphics[width=.49\linewidth]{samples/celeba-wgan-25.png}
     \end{minipage}
     \begin{minipage}{.39\linewidth}\raggedright
@@ -203,7 +203,7 @@
 
     \begin{minipage}{.6\linewidth}
       \includegraphics[width=.49\linewidth]{samples/lsun_rq_16.png}
-      \,
+      \hfill
       \includegraphics[width=.49\linewidth]{samples/lsun_wgan_16.png}
     \end{minipage}
     \begin{minipage}{.39\linewidth}\raggedright
@@ -212,24 +212,29 @@
        with \emph{small critic} DCGANs ($4\times$ less convolutional filters).
     \end{minipage}
     ~\\
+    ~\\
 
-    CelebA scores (mean + standard deviation):
-    % \begin{table}
-    %   \centering
-    %   \vspace{-1cm}
-    %   \caption{Mean (standard deviation) of score evaluations for the CelebA dataset.}
-    %   \label{tab:celeba-scores}
-    \begingroup \renewcommand{\arraystretch}{1.1}
-    \begin{tabular}{cc|rrr}
-        loss & top layer & \multicolumn{1}{c}{Inception} & \multicolumn{1}{c}{FID} & \multicolumn{1}{c}{KID} \\
-        \hline
-        MMD RQ   &   16 &\quad   2.61  (0.01) &\quad \textbf{20.55}  (0.25) &\quad \textbf{0.013}  (0.001)\\
-        Cram\'er &  256 &    2.86  (0.01) &   31.30  (0.17) &   0.025  (0.001)\\
-        WGAN-GP  & 1    &\textbf{2.72}  (0.01) &   29.24  (0.22) &   0.022  (0.001)\\
-        \multicolumn{2}{c|}{test set} &    3.76  (0.02) &    2.25  (0.04) &   0.000  (0.000)\\
-    \end{tabular}
-    \endgroup
-  % \end{table}
+    \includegraphics[width=.48\linewidth]{figs/celeba-scores.pdf}
+    \hfill
+    \includegraphics[width=.48\linewidth]{figs/lsun-scores.pdf}
+
+  %   CelebA scores (mean + standard deviation):
+  %   % \begin{table}
+  %   %   \centering
+  %   %   \vspace{-1cm}
+  %   %   \caption{Mean (standard deviation) of score evaluations for the CelebA dataset.}
+  %   %   \label{tab:celeba-scores}
+  %   \begingroup \renewcommand{\arraystretch}{1.1}
+  %   \begin{tabular}{cc|rrr}
+  %       loss & top layer & \multicolumn{1}{c}{Inception} & \multicolumn{1}{c}{FID} & \multicolumn{1}{c}{KID} \\
+  %       \hline
+  %       MMD RQ   &   16 &\quad   2.61  (0.01) &\quad \textbf{20.55}  (0.25) &\quad \textbf{0.013}  (0.001)\\
+  %       Cram\'er &  256 &    2.86  (0.01) &   31.30  (0.17) &   0.025  (0.001)\\
+  %       WGAN-GP  & 1    &\textbf{2.72}  (0.01) &   29.24  (0.22) &   0.022  (0.001)\\
+  %       \multicolumn{2}{c|}{test set} &    3.76  (0.02) &    2.25  (0.04) &   0.000  (0.000)\\
+  %   \end{tabular}
+  %   \endgroup
+  % % \end{table}
   \end{column}
 
   \begin{column}{.32\textwidth}
