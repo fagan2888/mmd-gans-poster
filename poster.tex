@@ -59,13 +59,13 @@
 \addtobeamertemplate{headline}{} % Imperial Logo. This is a bit hacky
 {
 \begin{tikzpicture}[remember picture,overlay]
-\node (uclbox) [shift={(-.39\linewidth,-4cm)}, align=left] at (current page.north east) {
+\node (uclbox) [shift={(-.39\linewidth,-3.25cm)}, align=left] at (current page.north east) {
   \includegraphics[height=13cm]{UCL_Black_Landscape.pdf} };
 
 \draw[fill=blackish](current page.north west) rectangle ([yshift=.2225cm, xshift=2cm] uclbox.south west);
 
-\node[shift={(10cm,-7.5cm)}] at (current page.north west) { \includegraphics[height=3.5cm]{Imperial_logo_white.pdf}}; 
-\end{tikzpicture} 
+\node[shift={(8.5cm,-7cm)}] at (current page.north west) { \includegraphics[height=3.5cm]{Imperial_logo_white.pdf}};
+\end{tikzpicture}
 % \begin{tikzpicture}[remember picture,overlay]
 % \node[shift={(-10cm,-5cm)}] at (current page.north east) { \includegraphics[height=7cm]{gatsby.jpg}};
 % \end{tikzpicture}
@@ -76,7 +76,8 @@
 \begin{columns}[T, totalwidth=\textwidth]
 
   \begin{column}{.32\textwidth}
-    \begin{alertblock}{Overview}
+    % TODO: fiddle with spacing in alertblock
+    \begin{alertblock}{\;Overview}
       \begin{itemize}\raggedright
         \item MMD GANs are related to WGANs, but with part of critic function optimization done in closed form.
         \item Outperform WGAN-GP, especially with smaller critic network.
@@ -88,8 +89,8 @@
       \end{itemize}
     \end{alertblock}
     % \vspace*{-1.2cm}
-    \begin{block}{Relation to Wasserstein and Cram\'er GANs} 
-      Integral Probablity Metrics (IPMs) %form a family of divergences between 
+    \begin{block}{Relation to Wasserstein and Cram\'er GANs}
+      Integral Probablity Metrics (IPMs) %form a family of divergences between
       are distances between distributions
       defined by a class of \emph{critic} functions $\F$:
       \[
@@ -100,15 +101,17 @@
 
       \vspace*{-1.5ex}\begin{itemize}
         \item{\textbf{Wasserstein distance} has $\F$ the set of 1-Lipschitz functions
-          \[  
-            \F = \left\{f: \sup_{x,y} \frac{|f(x) - f(y)|}{\|x - y\|}\leq 1\right\}. 
+          \[
+            \F = \left\{f: \sup_{x,y} \frac{|f(x) - f(y)|}{\|x - y\|}\leq 1\right\}.
           \]
           WGANs approximate $f$ with a critic network,
-          using weight clipping \parencite{wgan}
+          made approximately Lipschitz with
+          weight clipping \parencite{wgan}
           or gradient penalty \parencite{wgan-gp}.
         \item \textbf{Maximum Mean Discrepancy (MMD)} %\parencite{mmd-jmlr}
-          has $\F$ a unit ball in a 
-          \emph{Reproducing Kernel Hilbert Space (RKHS)} $\h$ with kernel $k$:
+          has $\F$ a unit ball in a
+          \emph{Reproducing Kernel Hilbert Space (RKHS)} $\h$ with kernel $k$: \\
+          \textbf{\color{red} TODO: dogs and fish}
           % \[ \F = \left\{f: \|f\|_{\h} \leq 1\right\}. \]
           % MMD value and the optimal critic are known in closed form:
           \begin{align*}
@@ -117,7 +120,7 @@
           \end{align*}
         }
         \item
-          MMD GANs \parencite{mmd-gan} optimize \emph{representation} in kernel 
+          MMD GANs \parencite{mmd-gan} optimize \emph{representation} in kernel
           \[ k_{\theta}(x, y) = k_\mathrm{base}(h_{\theta}(x), h_{\theta}(y)), \]
           corresponding to distance
           \[ \D(\PP, \QQ) = {\sup}_\theta \D_\theta(\PP, \QQ) = {\sup}_{\theta} \mmd_{k_\theta}^2(\PP, \QQ). \]
@@ -126,13 +129,13 @@
       \end{itemize}
     \end{block}
 
-    \begin{block}{Gradient Penalty}
-      Extending the idea of \textcite{wgan-gp}, we penalize the
-      gradient of the MMD GAN critic function:
+    \begin{block}{MMD GAN with Gradient Penalty}
+      Like WGAN-GPs \parencite{wgan-gp}, we penalize
+      gradient of the critic function:
       \[ Loss^{critic}(\theta) = \widehat{\mmd}_{\theta}^2(\PP, \QQ_{\psi}) + \lambda\E_{\tilde{X}}\left(\|\nabla_{\tilde{X}} f^*(\tilde{X})\| - 1\right)^2. \]
       %where $\tilde{X}$ are drawn between points from $\PP$ and $\QQ_{\psi}$. %$\widehat{MMD}$ is an unbiased MMD estimator.% and $\QQ_{\psi} = G_{\psi}(\ZZ)$ is the generated distribution.
       With linear $k_\mathrm{base}$,
-      this is almost same as a WGAN-GP.
+      \emph{almost} the same as a WGAN-GP.
     \end{block}
   \end{column}
 
@@ -152,7 +155,7 @@
         % \begin{itemize}
         %   \item General proof of $\E \nabla f = \nabla \E f$ for feedforward networks $f$.
         % \end{itemize}
-        \item ``Outer-loop'' gradient steps, $\nabla_\psi \hat\D(X, G_{\psi}(Z))$, are biased.
+        \item ``Outer loop'' gradient steps, $\nabla_\psi \hat\D(X, G_{\psi}(Z))$, are biased.
         \begin{itemize}
           \item Estimators with non-constant bias have biased gradients.
           \item Optimization-based estimators are biased:
@@ -172,11 +175,11 @@
     \begin{block}{Experimental comparison}
       MMD GANs outperform WGAN-GP, especially with \emph{smaller} critic networks (faster to train),
       probably by ``offloading'' work to closed-form kernel optimization.
-%      MMD GANs with gradient penalty and right kernel lead to better results 
+%      MMD GANs with gradient penalty and right kernel lead to better results
 %      than WGAN-GP and allow limiting the size of the critic
 %      network, while preserving sample quality. %We recommend use of a mixture of rational-quadratic kernels.
-%      MMD GANs also allow limiting the size of the critic 
-%      network, while preserving sample quality. 
+%      MMD GANs also allow limiting the size of the critic
+%      network, while preserving sample quality.
     \end{block}
     \vspace*{-1.3cm}
 %    \begin{figure}
@@ -186,7 +189,7 @@
 %      \includegraphics[width=.32\columnwidth]{samples/celeba-wgan-25.png}
 %      ~
 %      \includegraphics[width=.32\columnwidth]{samples/celeba-cramer-25.png}
-%      \caption{Samples for \textbf{$160 \times 160$ CelebA} dataset trained with 
+%      \caption{Samples for \textbf{$160 \times 160$ CelebA} dataset trained with
 %               MMD GAN (left) and WGAN-GP (right) with ResNet generator and DCGAN discriminator.}
 %    \end{figure}
 
@@ -245,8 +248,8 @@
       Fr\'echet Inception Distance (FID) \parencite{fid} better,
       but biased estimator:
       \vspace*{-1.5ex}\begin{itemize}
-        \item Bias \emph{very} strong across sample sizes (figure below).
-        \item 
+        \item Estimator has very strong bias, almost no variance.
+        \item
         Easy to find $\PP_1$, $\PP_2$, $\QQ$ where for reasonable sample sizes
         \[
           \FID(\PP_1, \QQ) < \FID(\PP_2, \QQ)
@@ -260,24 +263,25 @@
       $\mmd^2$ estimate with kernel $k(x, y) = \left( x^{\mathsf T} y / d + 1 \right)^3$
       between Inception representations.
       \vspace*{-1.5ex}\begin{itemize}
-        % \item Similar to FID, but simple unbiased estimator.
-        \item Unbiased estimator is faster, needs fewer samples than FID.
+        \item Estimator has no bias, small variance.
+        \item Computationally faster, needs fewer samples than FID.
         \item Asymptotically normal: easy Monte Carlo confidence intervals.
       \end{itemize}
 
-      Distance estimates between CIFAR-10 train and test sets with increasing sample sizes.
-      FID has strong bias and almost no variance;
-      KID has no bias and rapidly decreasing variance.
+      CIFAR-10 train to test estimates, increasing sample sizes:
+      % FID has strong bias and almost no variance;
+      % KID has no bias and rapidly decreasing variance.
       \\
       \includegraphics[width=\columnwidth]{figs/fid-kid-bias-comparison.pdf}
 
-        % \caption{Estimates of KID (left) and FID (right) between the CIFAR-10 train and test sets. FID estimates 
-        %   exhibit strong bias for $n$ even up to $10\,000$, which is not the case for KID. 
+        % \caption{Estimates of KID (left) and FID (right) between the CIFAR-10 train and test sets. FID estimates
+        %   exhibit strong bias for $n$ even up to $10\,000$, which is not the case for KID.
         %   Standard deviation of estimates shrinks quickly for KID and is always small for FID.}  %Each point is based on 100 samples, estimating with replacement; sampling without replacement, and/or using the full training set, gives similar results. Lines show means, error bars standard deviations, dark colored regions a $\frac{2}{3}$ coverage interval of the samples, light colored regions a $95\%$ interval. Note the differing $n$ axes.}
         % \label{fig:fid-kid-bias}
     \end{block}
 
     \begin{block}{Learning Rate Adaptation}
+      \textbf{\color{red} TODO: picture instead}
       \begin{itemize}
 %        \item Decreasing learning rate is common in deep learning.
         \item GAN learning rates usually tuned by hand; need to get it right.

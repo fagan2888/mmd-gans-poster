@@ -178,8 +178,9 @@
 
 \setbeamertemplate{navigation symbols}{}
 
-\RequirePackage[backend=biber,style=numeric,maxcitenames=1,maxbibnames=7]{biblatex}
-\renewcommand{\bibfont}{\footnotesize}
+\RequirePackage[backend=biber,style=numeric,maxcitenames=1,maxbibnames=3]{biblatex}
+\renewbibmacro{in:}{}
+\renewcommand{\bibfont}{\scriptsize}
 
 \setbeamertemplate{bibliography item}{\insertbiblabel\;}
 \setbeamercolor{bibliography item}{fg=normal text.fg}
