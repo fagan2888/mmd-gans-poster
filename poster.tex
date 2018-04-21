@@ -265,13 +265,11 @@
         \item Asymptotically normal: easy Monte Carlo confidence intervals.
       \end{itemize}
 
-      FID (left) and KID (right) estimates between CIFAR-10 train and test sets, increasing sample size.
+      Distance estimates between CIFAR-10 train and test sets with increasing sample sizes.
       FID has strong bias and almost no variance;
       KID has no bias and rapidly decreasing variance.
       \\
-      \includegraphics[width=.48\columnwidth]{figs/fid-bias.pdf}
-      \includegraphics[width=.48\columnwidth]{figs/mmd-unbiased.pdf}
-        % TODO: remake pictures the same size, and with bigger text...
+      \includegraphics[width=\columnwidth]{figs/fid-kid-bias-comparison.pdf}
 
         % \caption{Estimates of KID (left) and FID (right) between the CIFAR-10 train and test sets. FID estimates 
         %   exhibit strong bias for $n$ even up to $10\,000$, which is not the case for KID. 
