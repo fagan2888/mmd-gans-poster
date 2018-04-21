@@ -76,16 +76,17 @@
 \begin{columns}[T, totalwidth=\textwidth]
 
   \begin{column}{.32\textwidth}
-    \begin{block}{Overview}
-      \begin{itemize}
+    \begin{alertblock}{Overview}
+      \begin{itemize}\raggedright
         \item MMD GANs are related to WGANs, but with part of critic function optimization done in closed form.
-        \item We clarify gradient bias in optimizing GANs:
+        \item Outperform WGAN-GP, especially with smaller critic network.
+        \item Clarify gradient bias situation:
               ``outer loop'' generator gradients are biased,
               but each step is unbiased.
         \item New GAN performance metric with better estimator than FID;
               use it to adapt the learning rate during training.
       \end{itemize}
-    \end{block}
+    \end{alertblock}
     % \vspace*{-1.2cm}
     \begin{block}{Relation to Wasserstein and Cram\'er GANs} 
       Integral Probablity Metrics (IPMs) %form a family of divergences between 
@@ -137,7 +138,7 @@
 
   \begin{column}{.32\textwidth}
       % Wasserstein and (Gaussian kernel) MMD optimal critics: \\[1ex]
-      \includegraphics[width=\linewidth]{figs/witness.pdf}\\[-.75ex]
+      \includegraphics[width=\linewidth]{figs/witness.pdf}
       % Note multiple sample-optimal Wasserstein critics (light blue).
 
     % \vspace*{-1.3cm}
@@ -239,11 +240,10 @@
 
   \begin{column}{.32\textwidth}
     \begin{block}{New evaluation method: KID}
-      Inception scores are independent of the target distribution;
-      not meaningful for LSUN or CelebA.
+      Inception scores aren't meaningful for LSUN or CelebA.
 
-      Fr\'echet Inception Distance (FID) \parencite{fid} is better,
-      but estimator is very biased:
+      Fr\'echet Inception Distance (FID) \parencite{fid} better,
+      but biased estimator:
       \vspace*{-1.5ex}\begin{itemize}
         \item Bias \emph{very} strong across sample sizes (figure below).
         \item 
@@ -261,7 +261,7 @@
       between Inception representations.
       \vspace*{-1.5ex}\begin{itemize}
         % \item Similar to FID, but simple unbiased estimator.
-        \item Unbiased estimator is faster, needs fewer samples.
+        \item Unbiased estimator is faster, needs fewer samples than FID.
         \item Asymptotically normal: easy Monte Carlo confidence intervals.
       \end{itemize}
 

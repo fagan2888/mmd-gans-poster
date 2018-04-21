@@ -163,9 +163,22 @@
   \end{beamercolorbox}\vspace*{\baselineskip}
 }
 
+\setbeamertemplate{block alerted begin}{%
+  \begin{beamercolorbox}[ht=2.5ex,dp=1ex,rounded=true]{block alerted title}%
+    \usebeamerfont{block title}\MakeUppercase{\insertblocktitle}
+  \end{beamercolorbox}%
+  \usebeamerfont{block body}%
+  \begin{beamercolorbox}[vmode,rounded=true]{block alerted body}%
+  \setlength{\parskip}{1em}%
+  \vspace*{-\parskip}%
+  }
+\setbeamertemplate{block alerted end}{
+  \end{beamercolorbox}\vspace*{\baselineskip}
+}
+
 \setbeamertemplate{navigation symbols}{}
 
-\RequirePackage[backend=biber,style=numeric,maxcitenames=1,maxbibnames=1]{biblatex}
+\RequirePackage[backend=biber,style=numeric,maxcitenames=1,maxbibnames=7]{biblatex}
 \renewcommand{\bibfont}{\footnotesize}
 
 \setbeamertemplate{bibliography item}{\insertbiblabel\;}
