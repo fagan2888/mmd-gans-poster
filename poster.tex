@@ -110,14 +110,24 @@
           or gradient penalty \parencite{wgan-gp}.
         \item \textbf{Maximum Mean Discrepancy (MMD)} %\parencite{mmd-jmlr}
           has $\F$ a unit ball in a
-          \emph{Reproducing Kernel Hilbert Space (RKHS)} $\h$ with kernel $k$: \\
-          \textbf{\color{red} TODO: dogs and fish}
+          \emph{Reproducing Kernel Hilbert Space (RKHS)} $\h$ with kernel $k$: % \\
+          % \textbf{\color{red} TODO: dogs and fish}
           % \[ \F = \left\{f: \|f\|_{\h} \leq 1\right\}. \]
           % MMD value and the optimal critic are known in closed form:
-          \begin{align*}
-            \mmd_k^2(\PP, \QQ) &= \E_{\PP} k(X,X') + \E_{\QQ} k(Y,Y') - 2\E_{\PP,\QQ} k(X,Y),\\
-            f^*(t) &\propto \E_{\PP}k(X, t) - \E_{\QQ}k(Y, t).
-          \end{align*}
+          \begin{minipage}{.49\linewidth}
+            \begin{gather*}
+              f^*(t) \propto \E_{\PP}k(X, t) - \E_{\QQ}k(Y, t)
+              \\
+              \mmd_k^2:
+            \end{gather*}
+          \end{minipage}
+          \begin{minipage}{.49\linewidth}
+          \includegraphics[width=\linewidth]{figs/dogfish.png}
+          \end{minipage}
+          % \begin{align*}
+            % \mmd_k^2(\PP, \QQ) &= \E_{\PP} k(X,X') + \E_{\QQ} k(Y,Y') - 2\E_{\PP,\QQ} k(X,Y),\\
+            % f^*(t) &\propto \E_{\PP}k(X, t) - \E_{\QQ}k(Y, t).
+          % \end{align*}
         }
         \item
           MMD GANs \parencite{mmd-gan} optimize \emph{representation} in kernel
