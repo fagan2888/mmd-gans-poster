@@ -12,7 +12,8 @@
 \usepackage[caption=false]{subfig}
 % \captionsetup[table]{font={stretch=1.2}}     %% change 1.2 as you like
 
-\newcommand{\arxiv}[1]{}
+\newcommand{\arxiv}[1]{}  % bib was designed for stupid natbib
+\newcommand{\httpsurl}[1]{\href{https://#1}{\nolinkurl{#1}}}
 
 \usetheme{ImperialPoster}
 %% Four available colour themes
@@ -84,7 +85,7 @@
         \item Clarify gradient bias situation:
               ``outer loop'' generator gradients are biased,
               but each step is unbiased.
-        \item New GAN performance metric with better estimator than FID;
+        \item New GAN performance metric, KID, with better estimator than FID;
               use it to adapt the learning rate during training.
       \end{itemize}
     \end{alertblock}
@@ -300,6 +301,13 @@
 %         \item GAN learning rates usually tuned by hand; need to get it right.
 %         \item We propose an adaptive scheme: decrease if the KID score hasn't improved for a while, using an \emph{MMD relative similarity test} \parencite{3sample}.
 %       \end{itemize}
+    \end{block}
+
+    \vspace*{-2ex}
+    \begin{block}{Implementation}
+      \begin{center}
+        {\color{blue} \httpsurl{github.com/mbinkowski/MMD-GAN/}}
+      \end{center}
     \end{block}
 
     \printbibliography
