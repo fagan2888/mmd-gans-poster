@@ -291,12 +291,15 @@
     \end{block}
 
     \begin{block}{Learning Rate Adaptation}
-      \textbf{\color{red} TODO: picture instead}
-      \begin{itemize}
-%        \item Decreasing learning rate is common in deep learning.
-        \item GAN learning rates usually tuned by hand; need to get it right.
-        \item We propose an adaptive scheme: decrease if the KID score hasn't improved for a while, using an \emph{MMD relative similarity test} \parencite{3sample}.
-      \end{itemize}
+      Automatic learning rate adaptation using 3-sample test \parencite{3sample}:
+
+      \includegraphics[width=\linewidth]{figs/KID-LR.pdf}
+%       \textbf{\color{red} TODO: picture instead}
+%       \begin{itemize}
+% %        \item Decreasing learning rate is common in deep learning.
+%         \item GAN learning rates usually tuned by hand; need to get it right.
+%         \item We propose an adaptive scheme: decrease if the KID score hasn't improved for a while, using an \emph{MMD relative similarity test} \parencite{3sample}.
+%       \end{itemize}
     \end{block}
 
     \printbibliography
