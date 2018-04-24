@@ -65,7 +65,7 @@
 
 \draw[fill=blackish](current page.north west) rectangle ([yshift=.2225cm, xshift=2cm] uclbox.south west);
 
-\node[shift={(8.5cm,-7cm)}] at (current page.north west) { \includegraphics[height=3.5cm]{Imperial_logo_white.pdf}};
+\node[shift={(8.5cm,-6.5cm)}] at (current page.north west) { \includegraphics[height=3.5cm]{Imperial_logo_white.pdf}};
 \end{tikzpicture}
 % \begin{tikzpicture}[remember picture,overlay]
 % \node[shift={(-10cm,-5cm)}] at (current page.north east) { \includegraphics[height=7cm]{gatsby.jpg}};
@@ -151,6 +151,7 @@
   \end{column}
 
   \begin{column}{.32\textwidth}
+    \vspace*{-1cm}
       % Wasserstein and (Gaussian kernel) MMD optimal critics: \\[1ex]
       \includegraphics[width=\linewidth]{figs/witness.pdf}
       % Note multiple sample-optimal Wasserstein critics (light blue).
@@ -226,8 +227,7 @@
        MMD GAN (left) and WGAN-GP (right),
        with \emph{small critic} DCGANs ($4\times$ less convolutional filters).
     \end{minipage}
-    ~\\
-    ~\\
+    ~\\[1.5ex]
 
     \includegraphics[width=.48\linewidth]{figs/celeba-scores.pdf}
     \hfill
@@ -291,6 +291,7 @@
         % \label{fig:fid-kid-bias}
     \end{block}
 
+    \vspace*{-1cm}
     \begin{block}{Learning Rate Adaptation}
       Automatic learning rate adaptation using 3-sample test \parencite{3sample}:
 
